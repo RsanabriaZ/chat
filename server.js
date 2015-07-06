@@ -20,5 +20,8 @@ io = socketio.listen(server);
 
 
 io.on('connection', function(socket){
-	console.log("alguien se ha conectado")
+	socket.on('mensaje', function(mensaje){
+		console.log(mensaje)
+		io.emit('mensaje', mensaje);
+	})
 })
