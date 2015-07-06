@@ -1,0 +1,15 @@
+{
+  "name": "chat",
+  "version": "0.0.0",
+  "description": "Aplicación de Chat desarrollada en la clase de \"Desarrollo de Aplicaciones Web 2015\" ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "René Orlando Sanabria",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.13.1",
+    "socket.io": "~1.3.5"
+  }
+}
