@@ -108,7 +108,7 @@
       $("#m").on('keyup', function(){
         longitud = $(this).val().length
         // console.log(longitud);
-        if(longitud == 1 && !enviado){
+        if(longitud >= 1 && !enviado){
           enviado = true;
           socket.emit('escribe', nick);
         }
