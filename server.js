@@ -15,4 +15,12 @@ io.on('connection', function(socket){
 		console.log(mensaje)
 		io.emit('mensaje', mensaje);
 	})
+
+	socket.on('escribe', function(nick){
+		io.emit('escribe', nick)
+	})
+
+	socket.on('no escribe', function(nick){
+		io.emit('no escribe', nick)
+	})
 })

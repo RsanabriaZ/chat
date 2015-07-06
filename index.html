@@ -27,6 +27,7 @@
   <section class="mensajes">
     <ul id="messages"></ul>
     <form action="" id="formMensajes">
+      <div id="escriben" style="color:white; text-align:center"></div>
       <input id="m" autocomplete="off" /><button>Send</button>
     </form>
   </section>
@@ -35,6 +36,7 @@
     <script>
       var socket  //= io();
       var nick;
+      var escriben = [];
       $('.mensajes').fadeOut();
       $(".nick").fadeIn();
 
@@ -51,7 +53,44 @@
           socket.on('mensaje', function(msg){
             $('#messages').append($('<li>').text(msg));
             console.log('mensaje')
-          });              
+          });   
+
+          socket.on('escribe', function(nick){
+            escriben.push(nick);
+            texto = ""
+
+            escriben.forEach(function(escriben){
+              texto += escriben + ", "
+            })
+
+            texto += " está escribiendo"
+            // $('#escriben').empty()
+            $('#escriben').html(texto);
+          })       
+
+          socket.on('no escribe', function(nick){
+            console.log('no escribe')
+            escriben = escriben.filter(function(escribe){
+              return escribe != nick
+            })
+
+            texto = "";
+             // console.log(escriben)
+             if(escriben.length){
+              escriben.forEach(function(escriben){
+                texto += escriben + ", "
+              })
+
+              texto += " está escribiendo"
+              // $('#escriben').remove()
+             }
+
+             $('#escriben').html(texto)
+            // var str = document.getElementById("demo").innerHTML; 
+            // var res = str.replace("Microsoft", "W3Schools");
+            // document.getElementById("demo").innerHTML = res;
+
+          })    
         }
         else
           console.log('no tiene nada ')
@@ -64,6 +103,20 @@
         $('#m').val('');
         return false;
       });
+
+      var enviado = false
+      $("#m").on('keyup', function(){
+        longitud = $(this).val().length
+        // console.log(longitud);
+        if(longitud == 1 && !enviado){
+          enviado = true;
+          socket.emit('escribe', nick);
+        }
+        else if(longitud == 0){
+          enviado = false;
+          socket.emit('no escribe', nick)
+        }
+      })
      
     </script>
   </body>
