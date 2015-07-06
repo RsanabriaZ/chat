@@ -1,23 +1,14 @@
 var express = require('express');
 var app = express();
 
-
 app.get('/', function(req, res){
-	res.sendfile('index.html')
+  res.sendFile(__dirname + '/index.html');
 })
 
-
-var server  = app.listen(3000, function(){
-	var host = server.address().address;
-	var port = server.address().port;
-
-	console.log('Example app listening at http://%s:%s', host, port);
-})
-
+var server  = app.listen(3000)
 
 var socketio = require('socket.io');
 io = socketio.listen(server);
-
 
 io.on('connection', function(socket){
 	socket.on('mensaje', function(mensaje){
